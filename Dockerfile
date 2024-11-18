@@ -12,7 +12,6 @@ RUN apt update && \
     apt install -y pcmanfm tint2 && \
     # VNC
     apt install -y xvfb x11vnc openbox novnc websockify && \
-    apt install -y ibus ibus-pinyin && \
     # libatk1.0-0 libnss3 libatk-bridge2.0-0 libgbm1 libxkbcommon0 libasound2 locales fonts-noto-cjk fonts-wqy-microhei unzip pcmanfm tint2&& \
     wget -q --no-check-certificate -c https://github.com/dream10201/115Cookie/archive/refs/heads/master.zip && \
     unzip -j master.zip -d /usr/local/115Cookie/ && \
