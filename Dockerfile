@@ -59,7 +59,7 @@ RUN apt update && \
     --no-sandbox \
     --disable-gpu \
     --ignore-certificate-errors \
-    --disable-bundled-plugins \
+    # --disable-bundled-plugins \
     # --disable-dev-shm-usage \
     # --reduce-user-agent-sniffing \
     --no-first-run \
