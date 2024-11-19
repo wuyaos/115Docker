@@ -2,9 +2,9 @@
 sed -i "s/const CID=\"\"/const CID=\"${CID}\"/" /usr/local/115Cookie/worker.js
 sed -i "s/const SEID=\"\"/const SEID=\"${SEID}\"/" /usr/local/115Cookie/worker.js
 sed -i "s/const UID=\"\"/const UID=\"${UID}\"/" /usr/local/115Cookie/worker.js
-/usr/libexec/dconf-service &
 Xvfb :115 -screen 0 1366x768x16 &
 export DISPLAY=:115
+/usr/libexec/dconf-service &
 openbox &
 pcmanfm --desktop &
 tint2 &

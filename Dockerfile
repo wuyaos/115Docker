@@ -33,6 +33,8 @@ RUN apt update && \
     echo "export LANG=zh_CN.UTF-8" >>/root/.bashrc && \
     echo "export LC_ALL=zh_CN.UTF-8" >>/root/.bashrc && \
     echo "export DISPLAY=:115" >>/root/.bashrc && \
+    echo "export XDG_CONFIG_HOME=/tmp" >>/root/.bashrc && \
+    echo "export XDG_CACHE_HOME=/tmp" >>/root/.bashrc && \
     locale-gen zh_CN.UTF-8 && \
     mkdir -p ~/Desktop && \
     cp /usr/share/applications/115Browser.desktop ~/Desktop && \
@@ -57,6 +59,7 @@ RUN apt update && \
     --enable-features=ParallelDownloading \
     --start-maximized \
     --no-sandbox \
+    --disable-vulkan \
     --disable-gpu \
     --ignore-certificate-errors \
     --disable-bundled-plugins \
@@ -71,5 +74,5 @@ RUN apt update && \
     --disable-smooth-scrolling \
     --lang=zh-CN \
     --disable-software-rasterizer \
-    >/dev/null 2>&1 &" >> /usr/local/115Browser/115.sh
+    >/tmp/115Browser.log 2>&1 &" >> /usr/local/115Browser/115.sh
 CMD ["/run.sh"]
