@@ -24,9 +24,11 @@ docker run --name=115 \
 -v /opt/podman/115:/opt/115 \
 -v /download:/root/Downloads \
 --env PASSWORD=123456 \
---env CID=xxxx \
+--env CID=xxxx  #\
 --env SEID=xxxx \
 --env UID=xxxx \
+--env DISPLAY_WIDTH=1920 \
+--env DISPLAY_HEIGHT=1080 \
 --rm --network=host -d --tmpfs /tmp \
 --label io.containers.autoupdate=registry \
 --env TZ=Asia/Shanghai \

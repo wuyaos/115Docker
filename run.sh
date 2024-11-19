@@ -2,7 +2,7 @@
 sed -i "s/const CID=\"\"/const CID=\"${CID}\"/" /usr/local/115Cookie/worker.js
 sed -i "s/const SEID=\"\"/const SEID=\"${SEID}\"/" /usr/local/115Cookie/worker.js
 sed -i "s/const UID=\"\"/const UID=\"${UID}\"/" /usr/local/115Cookie/worker.js
-Xvfb :115 -screen 0 1366x768x16 &
+Xvfb :115 -screen 0 ${DISPLAY_WIDTH}x${DISPLAY_HEIGHT}x16 &
 export DISPLAY=:115
 /usr/libexec/dconf-service &
 openbox &
