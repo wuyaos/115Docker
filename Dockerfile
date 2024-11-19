@@ -46,6 +46,8 @@ RUN apt update && \
     echo "export LANG=zh_CN.UTF-8" >>/usr/local/115Browser/115.sh && \
     echo "export LC_ALL=zh_CN.UTF-8" >>/usr/local/115Browser/115.sh && \
     echo "export DISPLAY=:115" >>/usr/local/115Browser/115.sh && \
+    echo "export XDG_CONFIG_HOME=/tmp" >>/usr/local/115Browser/115.sh && \
+    echo "export XDG_CACHE_HOME=/tmp" >>/usr/local/115Browser/115.sh && \
     echo "/usr/local/115Browser/115Browser \
     --disable-backgrounding-occluded-windows \
     --user-data-dir=/opt/115 \
