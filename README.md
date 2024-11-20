@@ -30,7 +30,7 @@ docker run --name=115 \
 -v /opt/podman/115:/opt/115 \
 -v /download:/root/Downloads \
 --env PASSWORD=123456 \
---env CID=xxxx  #\
+--env CID=xxxx \
 --env SEID=xxxx \
 --env UID=xxxx \
 --env DISPLAY_WIDTH=1920 \
