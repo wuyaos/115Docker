@@ -16,7 +16,7 @@ chmod 0600 "${HOME}/.vnc/passwd"
 "${NO_VNC_HOME}"/utils/novnc_proxy --vnc localhost:6015 --listen 1150 &
 echo "geometry=${DISPLAY_WIDTH}x${DISPLAY_HEIGHT}" > ~/.vnc/config
 /usr/libexec/vncserver :115 &
-openbox &
+sleep 2;
 pcmanfm --desktop &
 tint2 &
 /usr/local/115Browser/115.sh

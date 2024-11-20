@@ -86,4 +86,4 @@ FROM novnc
 EXPOSE 1150
 ENV DISPLAY=:115
 COPY run.sh /run.sh
-CMD ["/run.sh"]
+CMD ["bash","/run.sh"]
