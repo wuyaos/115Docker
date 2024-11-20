@@ -12,7 +12,7 @@ FROM base AS desktop
 RUN apt update \
     && DEBIAN_FRONTEND=noninteractive \
     # thunar 
-    && apt install --no-install-recommends -y pcmanfm tint2 openbox xauth xinit \
+    && apt install -y pcmanfm tint2 openbox xauth xinit \
     && rm -rf /var/lib/apt/lists/*
 
 FROM desktop AS tigervnc
@@ -22,7 +22,7 @@ RUN wget -qO- https://sourceforge.net/projects/tigervnc/files/stable/1.14.1/tige
 FROM tigervnc AS novnc
 ENV NO_VNC_HOME=/usr/share/usr/local/share/noVNCdim
 RUN apt update \
-    && DEBIAN_FRONTEND=noninteractive apt install --no-install-recommends -y python3-numpy \
+    && DEBIAN_FRONTEND=noninteractive apt install -y python3-numpy \
     && mkdir -p "${NO_VNC_HOME}/utils/websockify" \
     && wget -qO- "https://github.com/novnc/noVNC/archive/v1.5.0.tar.gz" | tar xz --strip 1 -C "${NO_VNC_HOME}" \
     && wget -qO- "https://github.com/novnc/websockify/archive/v0.12.0.tar.gz" | tar xz --strip 1 -C "${NO_VNC_HOME}/utils/websockify" \
@@ -36,7 +36,7 @@ ENV \
     LD_LIBRARY_PATH=/usr/local/115Browser:\$LD_LIBRARY_PATH
 RUN apt update \
     && DEBIAN_FRONTEND=noninteractive \
-    && apt install --no-install-recommends -y libnss3 libasound2 libgbm1 \
+    && apt install -y libnss3 libasound2 libgbm1 \
     && wget -q --no-check-certificate -c https://github.com/jqlang/jq/releases/download/jq-1.7.1/jq-linux-amd64 \
     && chmod +x jq-linux-amd64 \
     && mv jq-linux-amd64 /usr/bin/jq \
