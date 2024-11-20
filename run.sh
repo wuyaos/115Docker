@@ -2,6 +2,12 @@
 sed -i "s/const CID=\"\"/const CID=\"${CID}\"/" /usr/local/115Cookie/worker.js
 sed -i "s/const SEID=\"\"/const SEID=\"${SEID}\"/" /usr/local/115Cookie/worker.js
 sed -i "s/const UID=\"\"/const UID=\"${UID}\"/" /usr/local/115Cookie/worker.js
+if [ -z "${DISPLAY_WIDTH}" ]; then
+    DISPLAY_WIDTH=1366
+fi
+if [ -z "${DISPLAY_HEIGHT}" ]; then
+    DISPLAY_HEIGHT=768
+fi
 Xvfb :115 -screen 0 ${DISPLAY_WIDTH}x${DISPLAY_HEIGHT}x16 &
 export DISPLAY=:115
 /usr/libexec/dconf-service &
