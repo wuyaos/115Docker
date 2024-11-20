@@ -8,13 +8,15 @@ fi
 if [ -z "${DISPLAY_HEIGHT}" ]; then
     DISPLAY_HEIGHT=768
 fi
-Xvfb :115 -screen 0 ${DISPLAY_WIDTH}x${DISPLAY_HEIGHT}x16 &
-export DISPLAY=:115
-/usr/libexec/dconf-service &
+
+mkdir -p "${HOME}/.vnc"
+export PASSWD_PATH="${HOME}/.vnc/passwd"
+echo ${PASSWORD} | vncpasswd -f > "${PASSWD_PATH}"
+chmod 0600 .vnc/passwd
+"${NO_VNC_HOME}"/utils/novnc_proxy --vnc localhost:6015 --listen 1150 &
+echo "geometry=${DISPLAY_WIDTH}x${DISPLAY_HEIGHT}" > ~/.vnc/config
+/usr/libexec/vncserver :115 &
 openbox &
 pcmanfm --desktop &
 tint2 &
-x11vnc -display :115 -passwd ${PASSWORD} -listen 127.0.0.1 -nopw -forever -rfbport 1152 &
-sleep 3
 /usr/local/115Browser/115.sh
-websockify --web /usr/share/novnc 1150 localhost:1152
