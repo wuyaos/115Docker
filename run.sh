@@ -18,5 +18,5 @@ echo "geometry=${DISPLAY_WIDTH}x${DISPLAY_HEIGHT}" > ~/.vnc/config
 /usr/libexec/vncserver :115 &
 sleep 2;
 pcmanfm --desktop &
-tint2 &
 /usr/local/115Browser/115.sh
+tint2
