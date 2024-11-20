@@ -3,19 +3,43 @@ ENV LANG=zh_CN.UTF-8 \
     LC_ALL=zh_CN.UTF-8 
 RUN apt update \
     && DEBIAN_FRONTEND=noninteractive \
-    && apt install -y wget curl unzip locales locales-all \
+    && apt install --no-install-recommends -y wget curl unzip locales locales-all \
     && locale-gen zh_CN.UTF-8 \
     && update-locale LANG=zh_CN.UTF-8 \
     && rm -rf /var/lib/apt/lists/*
 
-FROM base AS oneonefive
+FROM base AS desktop
+RUN apt update \
+    && DEBIAN_FRONTEND=noninteractive \
+    # thunar 
+    && apt install --no-install-recommends -y pcmanfm tint2 openbox xauth xinit \
+    && mkdir -p ~/Desktop \
+    && cp /usr/share/applications/115Browser.desktop ~/Desktop \
+    && cp /usr/share/applications/pcmanfm.desktop ~/Desktop \
+    && rm -rf /var/lib/apt/lists/*
+
+FROM desktop AS tigervnc
+RUN wget -qO- https://sourceforge.net/projects/tigervnc/files/stable/1.14.1/tigervnc-1.14.1.x86_64.tar.gz | tar xz --strip 1 -C /
+
+
+FROM tigervnc AS novnc
+ENV NO_VNC_HOME=/usr/share/usr/local/share/noVNCdim
+RUN apt update \
+    && DEBIAN_FRONTEND=noninteractive apt install --no-install-recommends -y python3-numpy \
+    && mkdir -p "${NO_VNC_HOME}/utils/websockify" \
+    && wget -qO- "https://github.com/novnc/noVNC/archive/v1.5.0.tar.gz" | tar xz --strip 1 -C "${NO_VNC_HOME}" \
+    && wget -qO- "https://github.com/novnc/websockify/archive/v0.12.0.tar.gz" | tar xz --strip 1 -C "${NO_VNC_HOME}/utils/websockify" \
+    && chmod +x -v "${NO_VNC_HOME}/utils/novnc_proxy" \
+    && rm -rf /var/lib/apt/lists/*
+
+FROM tigervnc AS oneonefive
 ENV \
     XDG_CONFIG_HOME=/tmp \
     XDG_CACHE_HOME=/tmp \
     LD_LIBRARY_PATH=/usr/local/115Browser:\$LD_LIBRARY_PATH
 RUN apt update \
     && DEBIAN_FRONTEND=noninteractive \
-    && apt install -y libnss3 libasound2 libgbm1 \
+    && apt install --no-install-recommends -y libnss3 libasound2 libgbm1 \
     && wget -q --no-check-certificate -c https://github.com/jqlang/jq/releases/download/jq-1.7.1/jq-linux-amd64 \
     && chmod +x jq-linux-amd64 \
     && mv jq-linux-amd64 /usr/bin/jq \
@@ -60,30 +84,7 @@ RUN apt update \
     >/tmp/115Browser.log 2>&1 &" >> /usr/local/115Browser/115.sh \
     && rm -rf /var/lib/apt/lists/*
 
-FROM oneonefive AS desktop
-RUN apt update \
-    && DEBIAN_FRONTEND=noninteractive \
-    # thunar 
-    && apt install -y pcmanfm tint2 openbox xauth xinit \
-    && mkdir -p ~/Desktop \
-    && cp /usr/share/applications/115Browser.desktop ~/Desktop \
-    && cp /usr/share/applications/pcmanfm.desktop ~/Desktop \
-    && rm -rf /var/lib/apt/lists/*
-
-FROM desktop AS tigervnc
-RUN wget -qO- https://sourceforge.net/projects/tigervnc/files/stable/1.14.1/tigervnc-1.14.1.x86_64.tar.gz | tar xz --strip 1 -C /
-
-
-FROM tigervnc AS novnc
-ENV NO_VNC_HOME=/usr/share/usr/local/share/noVNCdim
-RUN apt update \
-    && DEBIAN_FRONTEND=noninteractive apt install -y python3-numpy \
-    && mkdir -p "${NO_VNC_HOME}/utils/websockify" \
-    && wget -qO- "https://github.com/novnc/noVNC/archive/v1.5.0.tar.gz" | tar xz --strip 1 -C "${NO_VNC_HOME}" \
-    && wget -qO- "https://github.com/novnc/websockify/archive/v0.12.0.tar.gz" | tar xz --strip 1 -C "${NO_VNC_HOME}/utils/websockify" \
-    && chmod +x -v "${NO_VNC_HOME}/utils/novnc_proxy" \
-    && rm -rf /var/lib/apt/lists/*
-FROM novnc
+FROM oneonefive
 EXPOSE 1150
 ENV DISPLAY=:115
 COPY run.sh /run.sh
