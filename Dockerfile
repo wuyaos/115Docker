@@ -27,6 +27,7 @@ RUN apt update \
     && unzip -j master.zip -d /usr/local/115Cookie/ \
     && rm master.zip \
     && mkdir -p /opt/115 \
+    && echo "cd /usr/local/115Browser" > /usr/local/115Browser/115.sh \
     && echo "/usr/local/115Browser/115Browser \
     --disable-backgrounding-occluded-windows \
     --user-data-dir=/opt/115 \
@@ -84,4 +85,5 @@ RUN apt update \
 FROM novnc
 EXPOSE 1150
 ENV DISPLAY=:115
+COPY run.sh /run.sh
 CMD ["/run.sh"]
