@@ -13,9 +13,6 @@ RUN apt update \
     && DEBIAN_FRONTEND=noninteractive \
     # thunar 
     && apt install --no-install-recommends -y pcmanfm tint2 openbox xauth xinit \
-    && mkdir -p ~/Desktop \
-    && cp /usr/share/applications/115Browser.desktop ~/Desktop \
-    && cp /usr/share/applications/pcmanfm.desktop ~/Desktop \
     && rm -rf /var/lib/apt/lists/*
 
 FROM desktop AS tigervnc
@@ -50,6 +47,9 @@ RUN apt update \
     && wget -q --no-check-certificate -c https://github.com/dream10201/115Cookie/archive/refs/heads/master.zip \
     && unzip -j master.zip -d /usr/local/115Cookie/ \
     && rm master.zip \
+    && mkdir -p ~/Desktop \
+    && cp /usr/share/applications/115Browser.desktop ~/Desktop \
+    && cp /usr/share/applications/pcmanfm.desktop ~/Desktop \
     && mkdir -p /opt/115 \
     && echo "cd /usr/local/115Browser" > /usr/local/115Browser/115.sh \
     && echo "/usr/local/115Browser/115Browser \
