@@ -29,6 +29,7 @@ RUN apt update \
     && mkdir -p /opt/115 \
     && echo "cd /usr/local/115Browser" > /usr/local/115Browser/115.sh \
     && echo "/usr/local/115Browser/115Browser \
+    --test-type \
     --disable-backgrounding-occluded-windows \
     --user-data-dir=/opt/115 \
     --disable-cache \
