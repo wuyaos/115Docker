@@ -29,7 +29,7 @@ RUN apt update \
     && chmod +x -v "${NO_VNC_HOME}/utils/novnc_proxy" \
     && rm -rf /var/lib/apt/lists/*
 
-FROM tigervnc AS oneonefive
+FROM novnc AS oneonefive
 ENV \
     XDG_CONFIG_HOME=/tmp \
     XDG_CACHE_HOME=/tmp \
