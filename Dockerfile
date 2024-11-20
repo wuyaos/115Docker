@@ -27,6 +27,7 @@ RUN apt update \
     && wget -qO- "https://github.com/novnc/noVNC/archive/v1.5.0.tar.gz" | tar xz --strip 1 -C "${NO_VNC_HOME}" \
     && wget -qO- "https://github.com/novnc/websockify/archive/v0.12.0.tar.gz" | tar xz --strip 1 -C "${NO_VNC_HOME}/utils/websockify" \
     && chmod +x -v "${NO_VNC_HOME}/utils/novnc_proxy" \
+    && sed -i '1s/^/if(localStorage.getItem("resize") == null){localStorage.setItem("resize","remote");}\n/' "${NO_VNC_HOME}/app/ui.js" \
     && rm -rf /var/lib/apt/lists/*
 
 FROM novnc AS oneonefive
