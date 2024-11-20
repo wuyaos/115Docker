@@ -12,7 +12,7 @@ fi
 mkdir -p "${HOME}/.vnc"
 export PASSWD_PATH="${HOME}/.vnc/passwd"
 echo ${PASSWORD} | vncpasswd -f > "${PASSWD_PATH}"
-chmod 0600 .vnc/passwd
+chmod 0600 "${HOME}/.vnc/passwd"
 "${NO_VNC_HOME}"/utils/novnc_proxy --vnc localhost:6015 --listen 1150 &
 echo "geometry=${DISPLAY_WIDTH}x${DISPLAY_HEIGHT}" > ~/.vnc/config
 /usr/libexec/vncserver :115 &
