@@ -22,7 +22,7 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           push: true
-          tags: xiuxiu10201/115:dev
+          tags: ghcr.io/dream10201/115docker:dev,xiuxiu10201/115:dev
       -
         name: Build and push
         if: ${{ github.event_name == 'workflow_dispatch' }}
