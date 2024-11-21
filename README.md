@@ -1,10 +1,26 @@
 # 115浏览器Docker版
-拉取镜像
+## 拉取镜像
 ```bash
-docker pull ghcr.io/dream10201/115docker:latest
-//或者
 docker pull docker.io/xiuxiu10201/115:latest
+// or
+docker pull ghcr.io/dream10201/115docker:latest
 ```
+## 运行命令
+```shell
+docker run --name=115 \
+--env PASSWORD=123456 \
+--env DISPLAY_WIDTH=1920 \
+--env DISPLAY_HEIGHT=1080 \
+--rm --network=host -d --tmpfs /tmp \
+--label io.containers.autoupdate=registry \
+--env TZ=Asia/Shanghai \
+docker.io/xiuxiu10201/115:latest
+```
+> ***如果进入网盘时页面无限刷新，请更新Cookie***
+
+## Web
+[http://localhost:1150/vnc.html](http://localhost:1150/vnc.html)
+
 ## 环境变量
 
 | 名称 | 描述 | 必须|
@@ -29,17 +45,3 @@ docker pull docker.io/xiuxiu10201/115:latest
 |1150|WEB端口|Y|
 |1152|VNC端口|N|
 
-> ***如果进入网盘时页面无限刷新，请更新Cookie***
-
-```shell
-docker run --name=115 \
---env PASSWORD=123456 \
---env DISPLAY_WIDTH=1920 \
---env DISPLAY_HEIGHT=1080 \
---rm --network=host -d --tmpfs /tmp \
---label io.containers.autoupdate=registry \
---env TZ=Asia/Shanghai \
-docker.io/xiuxiu10201/115:latest
-```
-## Web
-[http://localhost:1150/vnc.html](http://localhost:1150/vnc.html)
