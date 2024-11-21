@@ -22,18 +22,18 @@ jobs:
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          password: ${{ secrets.CR_PAT }}
       -
         name: Build and push
         if: ${{ github.event_name == 'push' }}
         uses: docker/build-push-action@v6
         with:
           push: true
-          tags: ghcr.io/dream10201/115docker:dev,docker.io/xiuxiu10201/115:dev
+          tags: ghcr.io/dream10201/115docker:latest,docker.io/xiuxiu10201/115:dev
       -
         name: Build and push
         if: ${{ github.event_name == 'workflow_dispatch' }}
         uses: docker/build-push-action@v6
         with:
           push: true
-          tags: xiuxiu10201/115:latest
+          tags: ghcr.io/dream10201/115docker:latest,docker.io/xiuxiu10201/115:latest
