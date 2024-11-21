@@ -1,4 +1,10 @@
-# 115 Browser
+# 115浏览器Docker版
+拉取镜像
+```bash
+docker pull ghcr.io/dream10201/115docker:latest
+//或者
+docker pull docker.io/xiuxiu10201/115:latest
+```
 ## 环境变量
 
 | 名称 | 描述 | 必须|
