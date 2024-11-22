@@ -1,6 +1,6 @@
 FROM debian:latest AS base
 ENV LANG=zh_CN.UTF-8 \
-    LC_ALL=zh_CN.UTF-8 
+    LC_ALL=zh_CN.UTF-8
 RUN apt update \
     && DEBIAN_FRONTEND=noninteractive \
     && apt install -y wget curl unzip locales locales-all \
@@ -34,6 +34,8 @@ FROM novnc AS oneonefive
 ENV \
     XDG_CONFIG_HOME=/tmp \
     XDG_CACHE_HOME=/tmp \
+    HOME=/opt \
+    DISPLAY=:115 \
     LD_LIBRARY_PATH=/usr/local/115Browser:\$LD_LIBRARY_PATH
 RUN apt update \
     && DEBIAN_FRONTEND=noninteractive \
@@ -48,15 +50,19 @@ RUN apt update \
     && wget -q --no-check-certificate -c https://github.com/dream10201/115Cookie/archive/refs/heads/master.zip \
     && unzip -j master.zip -d /usr/local/115Cookie/ \
     && rm master.zip \
-    && mkdir -p ~/Desktop \
-    && cp /usr/share/applications/115Browser.desktop ~/Desktop \
-    && cp /usr/share/applications/pcmanfm.desktop ~/Desktop \
-    && mkdir -p /opt/115 \
+    && mkdir -p /opt/Desktop \
+    && mkdir -p /Downloads \
+    && chmod 777 -R /Downloads \
+    && cp /usr/share/applications/115Browser.desktop /opt/Desktop \
+    && cp /usr/share/applications/pcmanfm.desktop /opt/Desktop \
+    && chmod 777 -R /opt \
+    && mkdir -p /etc/115 \
+    && chmod 777 -R /etc/115 \
     && echo "cd /usr/local/115Browser" > /usr/local/115Browser/115.sh \
     && echo "/usr/local/115Browser/115Browser \
     --test-type \
     --disable-backgrounding-occluded-windows \
-    --user-data-dir=/opt/115 \
+    --user-data-dir=/etc/115 \
     --disable-cache \
     --load-extension=/usr/local/115Cookie \
     --disable-wav-audio \
@@ -87,6 +93,5 @@ RUN apt update \
 
 FROM oneonefive
 EXPOSE 1150
-ENV DISPLAY=:115
-COPY run.sh /run.sh
-CMD ["bash","/run.sh"]
+COPY run.sh /opt/run.sh
+CMD ["bash","/opt/run.sh"]
