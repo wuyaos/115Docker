@@ -16,7 +16,6 @@ docker run --name=115 \
 --env TZ=Asia/Shanghai \
 docker.io/xiuxiu10201/115:latest
 ```
-> ***如果进入网盘时页面无限刷新，请更新Cookie***
 
 ## Web
 [http://localhost:1150/vnc.html](http://localhost:1150/vnc.html)
