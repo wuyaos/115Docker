@@ -1,7 +1,5 @@
 #!/bin/bash
-sed -i "s/const CID=\"\"/const CID=\"${CID}\"/" /usr/local/115Cookie/worker.js
-sed -i "s/const SEID=\"\"/const SEID=\"${SEID}\"/" /usr/local/115Cookie/worker.js
-sed -i "s/const UID=\"\"/const UID=\"${UID}\"/" /usr/local/115Cookie/worker.js
+sed -i "1s/^/const CID=\"${CID}\"\nconst SEID=\"${SEID}\"\nconst UID=\"${UID}\"\n/" /usr/local/115Cookie/worker.js
 if [ -z "${DISPLAY_WIDTH}" ]; then
     DISPLAY_WIDTH=1366
 fi
