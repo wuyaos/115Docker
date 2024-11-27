@@ -52,6 +52,8 @@ RUN apt update \
     && mkdir -p ~/Desktop \
     && cp /usr/share/applications/115Browser.desktop ~/Desktop \
     && cp /usr/share/applications/pcmanfm.desktop ~/Desktop \
+    && mkdir /home/appuser \
+    && chmod 777 /home/appuser \
     && mkdir -p /opt/115 \
     && chmod 777 -R /opt \
     && echo "cd /usr/local/115Browser" > /usr/local/115Browser/115.sh \
@@ -89,8 +91,7 @@ RUN apt update \
 
 FROM oneonefive
 EXPOSE 1150
-RUN mkdir /home/appuser
 ENV DISPLAY=:115 \
     HOME=/home/appuser
-COPY run.sh /run.sh
-CMD ["bash","/run.sh"]
+COPY run.sh /home/appuser/run.sh
+CMD ["bash","/home/appuser/run.sh"]
