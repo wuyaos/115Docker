@@ -35,6 +35,8 @@ FROM novnc AS oneonefive
 ENV \
     XDG_CONFIG_HOME=/tmp \
     XDG_CACHE_HOME=/tmp \
+    HOME=/home/appuser \
+    DISPLAY=:115 \
     LD_LIBRARY_PATH=/usr/local/115Browser:\$LD_LIBRARY_PATH
 RUN apt update \
     && DEBIAN_FRONTEND=noninteractive \
@@ -49,11 +51,11 @@ RUN apt update \
     && wget -q --no-check-certificate -c https://github.com/dream10201/115Cookie/archive/refs/heads/master.zip \
     && unzip -j master.zip -d /usr/local/115Cookie/ \
     && rm master.zip \
-    && mkdir -p ~/Desktop \
-    && cp /usr/share/applications/115Browser.desktop ~/Desktop \
-    && cp /usr/share/applications/pcmanfm.desktop ~/Desktop \
     && mkdir /home/appuser \
     && chmod 777 /home/appuser \
+    && mkdir -p /home/appuser/Desktop \
+    && cp /usr/share/applications/115Browser.desktop /home/appuser/Desktop \
+    && cp /usr/share/applications/pcmanfm.desktop /home/appuser/Desktop \
     && mkdir -p /opt/115 \
     && chmod 777 -R /opt \
     && echo "cd /usr/local/115Browser" > /usr/local/115Browser/115.sh \
@@ -91,7 +93,5 @@ RUN apt update \
 
 FROM oneonefive
 EXPOSE 1150
-ENV DISPLAY=:115 \
-    HOME=/home/appuser
 COPY run.sh /home/appuser/run.sh
 CMD ["bash","/home/appuser/run.sh"]
