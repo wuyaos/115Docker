@@ -51,17 +51,17 @@ RUN apt update \
     && wget -q --no-check-certificate -c https://github.com/dream10201/115Cookie/archive/refs/heads/master.zip \
     && unzip -j master.zip -d /usr/local/115Cookie/ \
     && rm master.zip \
-    && chmod 777 /opt \
     && mkdir -p /opt/Desktop \
     && cp /usr/share/applications/115Browser.desktop /opt/Desktop \
     && cp /usr/share/applications/pcmanfm.desktop /opt/Desktop \
-    && mkdir -p /opt/115 \
     && chmod 777 -R /opt \
+    && mkdir -p /usr/local/etc/115 \
+    && chmod 777 -R /usr/local/etc/115 \
     && echo "cd /usr/local/115Browser" > /usr/local/115Browser/115.sh \
     && echo "/usr/local/115Browser/115Browser \
     --test-type \
     --disable-backgrounding-occluded-windows \
-    --user-data-dir=/opt/115 \
+    --user-data-dir=/usr/local/etc/115 \
     --disable-cache \
     --load-extension=/usr/local/115Cookie \
     --disable-wav-audio \
