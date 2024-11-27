@@ -1,4 +1,5 @@
 #!/bin/bash
+umask 000
 sed -i "1s/^/const CID=\"${CID}\"\nconst SEID=\"${SEID}\"\nconst UID=\"${UID}\"\n/" /usr/local/115Cookie/worker.js
 if [ -z "${DISPLAY_WIDTH}" ]; then
     DISPLAY_WIDTH=1366
