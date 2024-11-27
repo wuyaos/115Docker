@@ -7,10 +7,7 @@ RUN apt update \
     && locale-gen zh_CN.UTF-8 \
     && update-locale LANG=zh_CN.UTF-8 \
     && rm -rf /var/lib/apt/lists/* \
-    && echo "appuser ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers \
-    && groupadd -g 1000 appgroup \
-    && useradd -u 1000 -g appgroup -m appuser \
-    && usermod -aG sudo appuser
+    && echo "ALL ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 
 FROM base AS desktop
 RUN apt update \
@@ -56,6 +53,7 @@ RUN apt update \
     && cp /usr/share/applications/115Browser.desktop ~/Desktop \
     && cp /usr/share/applications/pcmanfm.desktop ~/Desktop \
     && mkdir -p /opt/115 \
+    && chmod 777 -R /opt \
     && echo "cd /usr/local/115Browser" > /usr/local/115Browser/115.sh \
     && echo "/usr/local/115Browser/115Browser \
     --test-type \
@@ -91,8 +89,8 @@ RUN apt update \
 
 FROM oneonefive
 EXPOSE 1150
+RUN mkdir /home/appuser
 ENV DISPLAY=:115 \
     HOME=/home/appuser
 COPY run.sh /run.sh
-USER appuser
 CMD ["bash","/run.sh"]
