@@ -55,13 +55,13 @@ RUN apt update \
     && cp /usr/share/applications/115Browser.desktop /opt/Desktop \
     && cp /usr/share/applications/pcmanfm.desktop /opt/Desktop \
     && chmod 777 -R /opt \
-    && mkdir -p /usr/local/etc/115 \
-    && chmod 777 -R /usr/local/etc/115 \
+    && mkdir -p /etc/115 \
+    && chmod 777 -R /etc/115 \
     && echo "cd /usr/local/115Browser" > /usr/local/115Browser/115.sh \
     && echo "/usr/local/115Browser/115Browser \
     --test-type \
     --disable-backgrounding-occluded-windows \
-    --user-data-dir=/usr/local/etc/115 \
+    --user-data-dir=/etc/115 \
     --disable-cache \
     --load-extension=/usr/local/115Cookie \
     --disable-wav-audio \
