@@ -1,12 +1,16 @@
 FROM debian:latest AS base
 ENV LANG=zh_CN.UTF-8 \
-    LC_ALL=zh_CN.UTF-8 
+    LC_ALL=zh_CN.UTF-8
 RUN apt update \
     && DEBIAN_FRONTEND=noninteractive \
-    && apt install -y wget curl unzip locales locales-all \
+    && apt install -y wget curl unzip locales locales-all sudo \
     && locale-gen zh_CN.UTF-8 \
     && update-locale LANG=zh_CN.UTF-8 \
-    && rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/* \
+    && echo "appuser ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers \
+    && groupadd -g 1000 appgroup \
+    && useradd -u 1000 -g appgroup -m appuser \
+    && usermod -aG sudo appuser
 
 FROM base AS desktop
 RUN apt update \
@@ -87,6 +91,8 @@ RUN apt update \
 
 FROM oneonefive
 EXPOSE 1150
-ENV DISPLAY=:115
+ENV DISPLAY=:115 \
+    HOME=/home/appuser
 COPY run.sh /run.sh
+USER appuser
 CMD ["bash","/run.sh"]
