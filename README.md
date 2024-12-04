@@ -1,4 +1,5 @@
 # 115浏览器Docker版
+用于无头环境Linux上传和下载文件。
 ## 拉取镜像
 ```bash
 docker pull docker.io/xiuxiu10201/115:latest
