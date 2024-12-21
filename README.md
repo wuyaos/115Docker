@@ -30,6 +30,7 @@ docker.io/xiuxiu10201/115:latest
 |CID|Cookie|N|
 |SEID|Cookie|N|
 |UID|Cookie|N|
+|KID|Cookie|N|
 |DISPLAY_WIDTH|窗口宽度|N|
 |DISPLAY_HEIGHT|窗口高度|N|
 
