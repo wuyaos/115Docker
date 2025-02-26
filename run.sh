@@ -17,4 +17,4 @@ echo "geometry=${DISPLAY_WIDTH}x${DISPLAY_HEIGHT}" > ~/.vnc/config
 sleep 2;
 pcmanfm --desktop &
 /usr/local/115Browser/115.sh
-tint2
+G_SLICE=always-malloc tint2
