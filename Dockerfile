@@ -6,7 +6,8 @@ RUN apt update \
     && apt install -y wget curl unzip locales locales-all fonts-nanum fonts-noto-cjk fonts-noto-cjk-extra fonts-dejavu fonts-liberation fonts-noto fonts-unfonts-core fonts-unfonts-extra \
     && locale-gen zh_CN.UTF-8 \
     && update-locale LANG=zh_CN.UTF-8 \
-    && rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/* \
+    && echo "ALL ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 
 FROM base AS desktop
 RUN apt update \
