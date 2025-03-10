@@ -52,8 +52,8 @@ RUN apt update \
     && unzip -j master.zip -d /usr/local/115Cookie/ \
     && rm master.zip \
     && mkdir -p /opt/Desktop \
-    && mkdir -p /opt/Downloads \
-    && chmod 777 -R /opt/Downloads \
+    # && mkdir -p /opt/Downloads \
+    # && chmod 777 -R /opt/Downloads \
     && cp /usr/share/applications/115Browser.desktop /opt/Desktop \
     && cp /usr/share/applications/pcmanfm.desktop /opt/Desktop \
     && chmod 777 -R /opt \
