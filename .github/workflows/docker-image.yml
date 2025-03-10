@@ -38,6 +38,7 @@ jobs:
           else
             echo "Values differ, proceeding with workflow"
             echo "should_cancel=false" >> $GITHUB_OUTPUT
+            echo "${{ steps.fetch-url.outputs.version }}" > .github/version
           fi
       - name: Cancel workflow if matched
         if: steps.check-match.outputs.should_cancel == 'true'
