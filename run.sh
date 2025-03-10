@@ -6,10 +6,6 @@ fi
 if [ -z "${DISPLAY_HEIGHT}" ]; then
     DISPLAY_HEIGHT=768
 fi
-if [[ ! -d /opt/Downloads ]];then
-    mkdir /opt/Downloads
-    chmod 777 -R /opt
-fi
 mkdir -p "${HOME}/.vnc"
 export PASSWD_PATH="${HOME}/.vnc/passwd"
 echo ${PASSWORD} | vncpasswd -f > "${PASSWD_PATH}"
