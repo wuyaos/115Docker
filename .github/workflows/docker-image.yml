@@ -52,7 +52,7 @@ jobs:
           git add .github/version
           git commit -m "Update version.txt via GitHub Actions"
           git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git
-          git push origin main
+          git push origin master
           git push
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
