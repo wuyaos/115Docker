@@ -11,6 +11,8 @@ jobs:
       contents: read
       attestations: write
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
       - name: Fetch value from URL
         id: fetch-url
         run: |
