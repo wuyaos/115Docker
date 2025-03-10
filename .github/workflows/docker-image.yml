@@ -53,6 +53,7 @@ jobs:
             echo "Unknown trigger: ${{ github.event_name }}"
           fi
       - name: Save version
+        if: steps.check-match.outputs.should_cancel == 'false'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
