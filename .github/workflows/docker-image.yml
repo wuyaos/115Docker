@@ -8,7 +8,7 @@ jobs:
     permissions:
       id-token: write
       packages: write
-      contents: read
+      contents: write
       attestations: write
     steps:
       - name: Checkout repository
@@ -44,14 +44,16 @@ jobs:
         if: steps.check-match.outputs.should_cancel == 'true'
         run: exit 1
       - name: Save version
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git config user.name "GitHub Action"
           git config user.email "action@github.com"
           git add .github/version
           git commit -m "Update version.txt via GitHub Actions"
+          git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git
+          git push origin main
           git push
-        env:
-          GITHUB_TOKEN: ${{ secrets.TOKEN }}
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
       - name: Login to Docker Hub
