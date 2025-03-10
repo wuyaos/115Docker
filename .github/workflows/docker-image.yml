@@ -44,7 +44,14 @@ jobs:
           fi
       - name: Cancel workflow if matched
         if: steps.check-match.outputs.should_cancel == 'true'
-        run: exit 1
+        run: |
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            echo "This workflow was manually triggered."
+          elif [[ "${{ github.event_name }}" == "schedule" ]]; then
+            exit 1
+          else
+            echo "Unknown trigger: ${{ github.event_name }}"
+          fi
       - name: Save version
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -52,7 +59,7 @@ jobs:
           git config user.name "GitHub Action"
           git config user.email "action@github.com"
           git add .github/version
-          git commit -m "Update version.txt via GitHub Actions"
+          git commit -m "Update version via GitHub Actions"
           git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git
           git push origin master
           git push
