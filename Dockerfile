@@ -3,7 +3,7 @@ ENV LANG=zh_CN.UTF-8 \
     LC_ALL=zh_CN.UTF-8
 RUN apt update \
     && DEBIAN_FRONTEND=noninteractive \
-    && apt install --no-install-recommends -y x11-xkb-utils xkbset wget curl unzip locales locales-all fonts-nanum fonts-noto-cjk fonts-noto-cjk-extra fonts-dejavu fonts-liberation fonts-noto fonts-unfonts-core fonts-unfonts-extra \
+    && apt install --no-install-recommends -y ca-certificates x11-xkb-utils xkbset wget curl unzip locales locales-all fonts-nanum fonts-noto-cjk fonts-noto-cjk-extra fonts-dejavu fonts-liberation fonts-noto fonts-unfonts-core fonts-unfonts-extra \
     && locale-gen zh_CN.UTF-8 \
     && update-locale LANG=zh_CN.UTF-8 \
     && rm -rf /var/lib/apt/lists/* \
@@ -44,7 +44,7 @@ RUN apt update \
     && wget -q --no-check-certificate -c https://github.com/jqlang/jq/releases/download/jq-1.7.1/jq-linux-amd64 \
     && chmod +x jq-linux-amd64 \
     && mv jq-linux-amd64 /usr/bin/jq \
-    && export VERSION=`curl -s https://appversion.115.com/1/web/1.0/api/getMultiVer | jq '.data["Linux-115chrome"].version_code'  | tr -d '"'` \
+    && export VERSION=`curl -k -s https://appversion.115.com/1/web/1.0/api/getMultiVer | jq '.data["Linux-115chrome"].version_code'  | tr -d '"'` \
     && wget -q --no-check-certificate -c "https://down.115.com/client/115pc/lin/115br_v${VERSION}.deb" \
     && apt install "./115br_v${VERSION}.deb"  \
     && rm "115br_v${VERSION}.deb" \
