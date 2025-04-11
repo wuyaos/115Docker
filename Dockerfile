@@ -3,7 +3,7 @@ ENV LANG=zh_CN.UTF-8 \
     LC_ALL=zh_CN.UTF-8
 RUN apt update \
     && DEBIAN_FRONTEND=noninteractive \
-    && apt install -y wget curl unzip locales locales-all fonts-nanum fonts-noto-cjk fonts-noto-cjk-extra fonts-dejavu fonts-liberation fonts-noto fonts-unfonts-core fonts-unfonts-extra \
+    && apt install --no-install-recommends -y x11-xkb-utils xkbset wget curl unzip locales locales-all fonts-nanum fonts-noto-cjk fonts-noto-cjk-extra fonts-dejavu fonts-liberation fonts-noto fonts-unfonts-core fonts-unfonts-extra \
     && locale-gen zh_CN.UTF-8 \
     && update-locale LANG=zh_CN.UTF-8 \
     && rm -rf /var/lib/apt/lists/* \
@@ -13,20 +13,20 @@ FROM base AS desktop
 RUN apt update \
     && DEBIAN_FRONTEND=noninteractive \
     # thunar 
-    && apt install -y pcmanfm tint2 openbox xauth xinit \
+    && apt install --no-install-recommends -y pcmanfm tint2 openbox xauth xinit \
     && rm -rf /var/lib/apt/lists/*
 
 FROM desktop AS tigervnc
-RUN wget -qO- https://sourceforge.net/projects/tigervnc/files/stable/1.14.1/tigervnc-1.14.1.x86_64.tar.gz | tar xz --strip 1 -C /
+RUN wget --no-check-certificate -qO- https://sourceforge.net/projects/tigervnc/files/stable/1.15.0/tigervnc-1.15.0.x86_64.tar.gz | tar xz --strip 1 -C /
 
 
 FROM tigervnc AS novnc
 ENV NO_VNC_HOME=/usr/share/usr/local/share/noVNCdim
 RUN apt update \
-    && DEBIAN_FRONTEND=noninteractive apt install -y python3-numpy \
+    && DEBIAN_FRONTEND=noninteractive apt install --no-install-recommends -y python3-numpy \
     && mkdir -p "${NO_VNC_HOME}/utils/websockify" \
-    && wget -qO- "https://github.com/novnc/noVNC/archive/v1.5.0.tar.gz" | tar xz --strip 1 -C "${NO_VNC_HOME}" \
-    && wget -qO- "https://github.com/novnc/websockify/archive/v0.12.0.tar.gz" | tar xz --strip 1 -C "${NO_VNC_HOME}/utils/websockify" \
+    && wget --no-check-certificate -qO- "https://github.com/novnc/noVNC/archive/v1.6.0.tar.gz" | tar xz --strip 1 -C "${NO_VNC_HOME}" \
+    && wget --no-check-certificate -qO- "https://github.com/novnc/websockify/archive/v0.13.0.tar.gz" | tar xz --strip 1 -C "${NO_VNC_HOME}/utils/websockify" \
     && chmod +x -v "${NO_VNC_HOME}/utils/novnc_proxy" \
     && sed -i '1s/^/if(localStorage.getItem("resize") == null){localStorage.setItem("resize","remote");}\n/' "${NO_VNC_HOME}/app/ui.js" \
     && rm -rf /var/lib/apt/lists/*
@@ -40,7 +40,7 @@ ENV \
     LD_LIBRARY_PATH=/usr/local/115Browser:\$LD_LIBRARY_PATH
 RUN apt update \
     && DEBIAN_FRONTEND=noninteractive \
-    && apt install -y libnss3 libasound2 libgbm1 \
+    && apt install -y --no-install-recommends libnss3 libasound2 libgbm1 \
     && wget -q --no-check-certificate -c https://github.com/jqlang/jq/releases/download/jq-1.7.1/jq-linux-amd64 \
     && chmod +x jq-linux-amd64 \
     && mv jq-linux-amd64 /usr/bin/jq \
