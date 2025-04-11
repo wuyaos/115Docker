@@ -23,7 +23,7 @@ RUN wget --no-check-certificate -qO- https://sourceforge.net/projects/tigervnc/f
 FROM tigervnc AS novnc
 ENV NO_VNC_HOME=/usr/share/usr/local/share/noVNCdim
 RUN apt update \
-    && DEBIAN_FRONTEND=noninteractive apt install --no-install-recommends -y python3-numpy \
+    && DEBIAN_FRONTEND=noninteractive apt install --no-install-recommends -y python3-numpy libxshmfence1 libxcvt0 libgbm1 \
     && mkdir -p "${NO_VNC_HOME}/utils/websockify" \
     && wget --no-check-certificate -qO- "https://github.com/novnc/noVNC/archive/v1.6.0.tar.gz" | tar xz --strip 1 -C "${NO_VNC_HOME}" \
     && wget --no-check-certificate -qO- "https://github.com/novnc/websockify/archive/v0.13.0.tar.gz" | tar xz --strip 1 -C "${NO_VNC_HOME}/utils/websockify" \
