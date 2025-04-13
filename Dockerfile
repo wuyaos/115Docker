@@ -39,7 +39,9 @@ RUN apt install -y --no-install-recommends libnss3 libasound2 libgbm1 \
     && wget -q --no-check-certificate "https://down.115.com/client/115pc/lin/115br_v${VERSION}.deb" -O /tmp/tmp.deb \
     && apt install /tmp/tmp.deb  \
     && rm /tmp/tmp.deb \
-    && wget --no-check-certificate -qO- https://github.com/dream10201/115Cookie/archive/refs/heads/master.zip | unzip -d /usr/local/115Cookie/ -j \
+    && wget --no-check-certificate -q https://github.com/dream10201/115Cookie/archive/refs/heads/master.zip -O /tmp/tmp.zip \
+    && unzip -j /tmp/tmp.zip -d /usr/local/115Cookie/ \
+    && rm /tmp/tmp.zip \
     && mkdir -p /opt/Desktop \
     && ln -s /usr/share/applications/115Browser.desktop /opt/Desktop \
     && ln -s /usr/share/applications/pcmanfm.desktop /opt/Desktop \
