@@ -1,20 +1,16 @@
 FROM debian:latest AS base
 ENV LANG=zh_CN.UTF-8 \
-    LC_ALL=zh_CN.UTF-8
+    LC_ALL=zh_CN.UTF-8 \
+    DEBIAN_FRONTEND=noninteractive
 RUN apt update \
-    && DEBIAN_FRONTEND=noninteractive \
     && apt install --no-install-recommends -y ca-certificates x11-xkb-utils xkbset wget curl unzip locales locales-all fonts-nanum fonts-noto-cjk fonts-noto-cjk-extra fonts-dejavu fonts-liberation fonts-noto fonts-unfonts-core fonts-unfonts-extra \
     && locale-gen zh_CN.UTF-8 \
     && update-locale LANG=zh_CN.UTF-8 \
-    && rm -rf /var/lib/apt/lists/* \
     && echo "ALL ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 
 FROM base AS desktop
-RUN apt update \
-    && DEBIAN_FRONTEND=noninteractive \
-    # thunar 
-    && apt install --no-install-recommends -y pcmanfm tint2 openbox xauth xinit \
-    && rm -rf /var/lib/apt/lists/*
+ENV G_SLICE=always-malloc
+RUN apt install --no-install-recommends -y pcmanfm tint2 openbox xauth xinit
 
 FROM desktop AS tigervnc
 RUN wget --no-check-certificate -qO- https://sourceforge.net/projects/tigervnc/files/stable/1.15.0/tigervnc-1.15.0.x86_64.tar.gz | tar xz --strip 1 -C /
@@ -22,14 +18,12 @@ RUN wget --no-check-certificate -qO- https://sourceforge.net/projects/tigervnc/f
 
 FROM tigervnc AS novnc
 ENV NO_VNC_HOME=/usr/share/usr/local/share/noVNCdim
-RUN apt update \
-    && DEBIAN_FRONTEND=noninteractive apt install --no-install-recommends -y python3-numpy libxshmfence1 libxcvt0 libgbm1 \
+RUN apt install --no-install-recommends -y python3-numpy libxshmfence1 libxcvt0 libgbm1 \
     && mkdir -p "${NO_VNC_HOME}/utils/websockify" \
     && wget --no-check-certificate -qO- "https://github.com/novnc/noVNC/archive/v1.6.0.tar.gz" | tar xz --strip 1 -C "${NO_VNC_HOME}" \
     && wget --no-check-certificate -qO- "https://github.com/novnc/websockify/archive/v0.13.0.tar.gz" | tar xz --strip 1 -C "${NO_VNC_HOME}/utils/websockify" \
     && chmod +x -v "${NO_VNC_HOME}/utils/novnc_proxy" \
-    && sed -i '1s/^/if(localStorage.getItem("resize") == null){localStorage.setItem("resize","remote");}\n/' "${NO_VNC_HOME}/app/ui.js" \
-    && rm -rf /var/lib/apt/lists/*
+    && sed -i '1s/^/if(localStorage.getItem("resize") == null){localStorage.setItem("resize","remote");}\n/' "${NO_VNC_HOME}/app/ui.js"
 
 FROM novnc AS oneonefive
 ENV \
@@ -38,19 +32,14 @@ ENV \
     HOME=/opt \
     DISPLAY=:115 \
     LD_LIBRARY_PATH=/usr/local/115Browser:\$LD_LIBRARY_PATH
-RUN apt update \
-    && DEBIAN_FRONTEND=noninteractive \
-    && apt install -y --no-install-recommends libnss3 libasound2 libgbm1 \
-    && wget -q --no-check-certificate -c https://github.com/jqlang/jq/releases/download/jq-1.7.1/jq-linux-amd64 \
-    && chmod +x jq-linux-amd64 \
-    && mv jq-linux-amd64 /usr/bin/jq \
+RUN apt install -y --no-install-recommends libnss3 libasound2 libgbm1 \
+    && wget -q --no-check-certificate https://github.com/jqlang/jq/releases/download/jq-1.7.1/jq-linux-amd64 -O /usr/bin/jq \
+    && chmod +x /usr/bin/jq \
     && export VERSION=`curl -k -s https://appversion.115.com/1/web/1.0/api/getMultiVer | jq '.data["Linux-115chrome"].version_code'  | tr -d '"'` \
-    && wget -q --no-check-certificate -c "https://down.115.com/client/115pc/lin/115br_v${VERSION}.deb" \
-    && apt install "./115br_v${VERSION}.deb"  \
-    && rm "115br_v${VERSION}.deb" \
-    && wget -q --no-check-certificate -c https://github.com/dream10201/115Cookie/archive/refs/heads/master.zip \
-    && unzip -j master.zip -d /usr/local/115Cookie/ \
-    && rm master.zip \
+    && wget -q --no-check-certificate "https://down.115.com/client/115pc/lin/115br_v${VERSION}.deb" -O /tmp/tmp.deb \
+    && apt install /tmp/tmp.deb  \
+    && rm /tmp/tmp.deb \
+    && wget --no-check-certificate -qO- https://github.com/dream10201/115Cookie/archive/refs/heads/master.zip | unzip -d /usr/local/115Cookie/ -j \
     && mkdir -p /opt/Desktop \
     && ln -s /usr/share/applications/115Browser.desktop /opt/Desktop \
     && ln -s /usr/share/applications/pcmanfm.desktop /opt/Desktop \
@@ -88,6 +77,7 @@ RUN apt update \
     --lang=zh-CN \
     --disable-software-rasterizer \
     >/tmp/115Browser.log 2>&1 &" >> /usr/local/115Browser/115.sh \
+    && apt clean -y \
     && rm -rf /var/lib/apt/lists/*
 
 FROM oneonefive
