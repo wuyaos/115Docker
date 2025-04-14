@@ -28,6 +28,7 @@ docker.io/xiuxiu10201/115:latest
 
 | 名称 | 描述 | 必须|
 |:---------:|:---------:|:---------:|
+|LANGUAGE|语言(zh_CN.UTF-8)|N|
 |PASSWORD|VNC密码|Y|
 |CID|Cookie|N|
 |SEID|Cookie|N|
