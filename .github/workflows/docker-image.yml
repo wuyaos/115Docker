@@ -89,7 +89,7 @@ jobs:
 
       - name: Release and push (non-master branch)
         # if: ${{ github.event_name == 'workflow_dispatch' && github.ref_name != 'master' }}
-        if: ${{ github.ref_name == 'master' }}
+        if: ${{ github.ref_name == 'dev' }}
         uses: docker/build-push-action@v6
         with:
           push: true
