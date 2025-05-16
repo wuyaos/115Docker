@@ -4,6 +4,7 @@ ENV \
     XDG_CACHE_HOME=/tmp \
     HOME=/opt \
     DISPLAY=:115 \
+    WEB_PORT=1150 \
     LD_LIBRARY_PATH=/usr/local/115Browser:\$LD_LIBRARY_PATH
 RUN apt install -y --no-install-recommends libnss3 libgbm1 \
     && wget -q --no-check-certificate https://github.com/jqlang/jq/releases/download/jq-1.7.1/jq-linux-amd64 -O /usr/bin/jq \
@@ -16,8 +17,8 @@ RUN apt install -y --no-install-recommends libnss3 libgbm1 \
     && unzip -j /tmp/tmp.zip -d /usr/local/115Cookie/ \
     && rm /tmp/tmp.zip \
     && mkdir -p /opt/Desktop \
-    && ln -s /usr/share/applications/115Browser.desktop /opt/Desktop \
-    && ln -s /usr/share/applications/pcmanfm.desktop /opt/Desktop \
+    && cp /usr/share/applications/115Browser.desktop /opt/Desktop \
+    && cp /usr/share/applications/pcmanfm.desktop /opt/Desktop \
     && chmod 777 -R /opt \
     && mkdir -p /etc/115 \
     && chmod 777 -R /etc/115 \
