@@ -1,5 +1,5 @@
 FROM lscr.io/linuxserver/webtop:debian-xfce AS oneonefive
-RUN sudo su
+RUN sudo su \
     && apt install -y --no-install-recommends libnss3 libgbm1 font-noto-cjk ttf-wqy-zenhei ttf-wqy-microhei fonts-arphic-ukai fonts-arphic-uming \
     && wget -q --no-check-certificate https://github.com/jqlang/jq/releases/download/jq-1.7.1/jq-linux-amd64 -O /usr/bin/jq \
     && chmod +x /usr/bin/jq \
