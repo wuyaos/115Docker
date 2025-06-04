@@ -1,11 +1,4 @@
-FROM docker.io/xiuxiu10201/webvnc:latest AS oneonefive
-ENV \
-    XDG_CONFIG_HOME=/tmp \
-    XDG_CACHE_HOME=/tmp \
-    HOME=/opt \
-    DISPLAY=:115 \
-    WEB_PORT=1150 \
-    LD_LIBRARY_PATH=/usr/local/115Browser:\$LD_LIBRARY_PATH
+FROM lscr.io/linuxserver/webtop:debian-xfce AS oneonefive
 RUN apt install -y --no-install-recommends libnss3 libgbm1 \
     && wget -q --no-check-certificate https://github.com/jqlang/jq/releases/download/jq-1.7.1/jq-linux-amd64 -O /usr/bin/jq \
     && chmod +x /usr/bin/jq \
@@ -55,8 +48,3 @@ RUN apt install -y --no-install-recommends libnss3 libgbm1 \
     >/tmp/115Browser.log 2>&1 &" >> /usr/local/115Browser/115.sh \
     && apt clean -y \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-
-FROM oneonefive
-EXPOSE 1150
-COPY run.sh /opt/run.sh
-CMD ["bash","/opt/run.sh"]
