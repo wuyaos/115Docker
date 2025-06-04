@@ -15,29 +15,15 @@
 
 ```bash
 # 基本运行
-docker run -d \
-  --name=115browser \
-  --security-opt=seccomp=unconfined \
-  -e PUID=1000 \
-  -e PGID=1000 \
-  -e TZ=Asia/Shanghai \
-  -p 3000:3000 \
-  -v /path/to/config:/config \
-  -v /path/to/data:/etc/115 \
-  --restart unless-stopped \
-  115docker
-
 docker run \
---name webtop \
+--name 115docker \
 --security-opt seccomp:unconfined \
 -e PUID=1000 \
 -e PGID=1000 \
 -e TZ=Asia/Shanghai \
--e TITLE=Webtop \
+-e TITLE=115docker \
 -e DOCKER_MODS=linuxserver/mods:universal-package-install \
 -e LC_ALL=zh_CN.UTF-8 \
--e INSTALL_PACKAGES=font-noto-cjk \
--e INSTALL_PACKAGES='ttf-wqy-zenhei ttf-wqy-microhei fonts-arphic-ukai fonts-arphic-uming' \
 -e NO_DECOR=1 \
 -v /path/to/config:/config \
 -v /var/run/docker.sock:/var/run/docker.sock \
@@ -45,7 +31,7 @@ docker run \
 -p 3000:3000 \
 --shm-size 1gb \
 --restart unless-stopped \
-lscr.io/linuxserver/webtop:latest
+wuyaos/115docker:latest
 ```
 
 ### Docker Compose
@@ -55,7 +41,7 @@ lscr.io/linuxserver/webtop:latest
 version: "2.1"
 services:
   115docker:
-    image: 115docker
+    image: wuyaos/115docker:latest
     container_name: 115browser
     security_opt:
       - seccomp=unconfined
@@ -66,8 +52,6 @@ services:
       - TITLE=Webtop
       - DOCKER_MODS=linuxserver/mods:universal-package-install
       - LC_ALL=zh_CN.UTF-8
-      - INSTALL_PACKAGES=font-noto-cjk
-      - INSTALL_PACKAGES='ttf-wqy-zenhei ttf-wqy-microhei fonts-arphic-ukai fonts-arphic-uming'
       - NO_DECOR=1
     volumes:
       - /path/to/config:/config
